@@ -1,0 +1,26 @@
+{
+  "name": "EmployeeManager",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jdogcrane/EmployeeManager.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Jdogcrane/EmployeeManager/issues"
+  },
+  "homepage": "https://github.com/Jdogcrane/EmployeeManager#readme",
+  "dependencies": {
+    "inquirer": "^8.1.1",
+    "mysql": "^2.18.1",
+    "nodemon": "^2.0.7"
+  }
+}
