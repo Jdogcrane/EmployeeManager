@@ -39,7 +39,7 @@ function menu() {
 
         // depending on user choice start creating worker
     ]).then(({ menuChoice }) => {
-        console.log(`\n ---------> ${menuChoice} <---------`)
+        console.log(`\n Selected: ${menuChoice}`)
         switch (menuChoice) {
             case 'Add Departments':
                 addDepartments();
@@ -74,6 +74,31 @@ function menu() {
         }
     });
 }
+
+function addDepartments() {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "\n---------> Add Department <---------\n Name of new department:",
+            name: "newDepartment",
+        },
+
+        // depending on user choice start creating worker
+    ]).then(({ newDepartment }) => {
+
+        console.log('Adding department...\n');
+        const query = connection.query(
+            'INSERT INTO department SET ?',
+            {
+                name: `${newDepartment}`
+            },
+            (err, res) => {
+                if (err) throw err;
+            }
+        );
+        console.log(query.sql);
+    })
+};
 // creates prompts in terminal for the user to input data for the app to collect
 
 connection.connect((err) => {

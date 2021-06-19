@@ -1,31 +1,11 @@
 USE departmentDB;
 
-/* Insert 3 Rows into your new table */
-INSERT INTO department (name)
-VALUES ("UMass");
+/* testing */
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("first_name", "last_name", "2", "1");
 
-INSERT INTO department (name)
-VALUES ("Boston College");
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("first_naame", "last_name", "2", "1");
 
-INSERT INTO department (name)
-VALUES ("Harvard");
-
-/* OR */
-INSERT INTO department (name)
-VALUES ("Emerson"), ("Northeastern"), ("MIT");
-
-USE roleDB;
-
-/* Insert 3 Rows into your new table */
-INSERT INTO role (title)
-VALUES ("UMass");
-
-INSERT INTO role (title)
-VALUES ("Boston College");
-
-INSERT INTO role (title)
-VALUES ("Harvard");
-
-/* OR */
-INSERT INTO role (title)
-VALUES ("Emerson"), ("Northeastern"), ("MIT");
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ("first_name", "last_name", "2", "1");
