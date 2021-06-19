@@ -1,5 +1,8 @@
 const inquirer = require("inquirer");
 const mysql = require("mysql");
+// ascii generator
+let ascii_text_generator = require('ascii-text-generator');
+// connection for sql data base
 const connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
@@ -12,7 +15,7 @@ function menu() {
     inquirer.prompt([
         {
             type: "list",
-            message: "\n---------> MENU <---------\n Select an Employee to add to the team:",
+            message: "\n---------> MENU <---------\n Select what you would like to do:",
             name: "menuChoice",
             choices: [
                 "Add Departments",
@@ -44,9 +47,10 @@ function menu() {
                 update();
                 break;
             case "Update Manager":
-                viewEmployees();
+                updateManger();
                 break;
             case "Exit":
+                console.log("GoodBye!")
                 process.exit(0);
             default:
                 console.log(`Invalid action: ${menuChoice}`);
@@ -67,7 +71,7 @@ function addDepartment() {
         // depending on user choice start creating worker
     ]).then(({ newDepartment }) => {
 
-        console.log("Adding department...\n");
+        console.log("\x1b[33m%s\x1b[0m", "---------> Adding department...\n");
         const query = connection.query(
             // inserting into DEPARTMENT table and adding to a colum based off position
             "INSERT INTO department SET ?",
@@ -79,7 +83,7 @@ function addDepartment() {
                 if (err) throw err;
             }
         );
-        console.log(query.sql);
+        console.log("\x1b[32m", "Success");
         menu();
     })
 };
@@ -127,7 +131,7 @@ function addRole() {
                 if (err) throw err;
             }
         );
-        console.log(query.sql);
+        console.log("\x1b[32m", "Success");
         menu();
     })
 };
@@ -158,7 +162,7 @@ function addEmployee() {
         },
         {
             type: "input",
-            message: "-----------------------------\n Manager's ID:",
+            message: "-----------------------------\n Managers ID:",
             name: "manager_id",
             default: "420",
             validate: validate
@@ -185,7 +189,7 @@ function addEmployee() {
                 if (err) throw err;
             }
         );
-        console.log(query.sql);
+        console.log("\x1b[32m", "Success");
         menu();
     })
 };
@@ -194,7 +198,7 @@ function display() {
     inquirer.prompt([
         {
             type: "list",
-            message: "\n---------> View <---------\n Select an Employee to add to the team:",
+            message: "\n---------> View <---------\n View:",
             name: "choice",
             choices: [
                 "department",
@@ -208,7 +212,7 @@ function display() {
         if (choice === "Back to Main-Menu") {
             menu();
         } else {
-            console.log(`\x1b[33m%s\x1b[0m`, `\n---------> ${choice}... <---------\n`);
+            console.log(`\x1b[33m%s\x1b[0m`, `\n--------->${choice}<---------\n`);
             connection.query(`SELECT * FROM ${choice}`, (err, choice) => {
                 if (err) throw err;
                 // Log all results of the SELECT statement
@@ -218,7 +222,7 @@ function display() {
         }
     });
 };
-
+// Allows users to update a employee"s role id
 function update() {
     inquirer.prompt([
         {
@@ -230,16 +234,14 @@ function update() {
         },
         {
             type: "input",
-            message: "\n---------> Update Role <---------\n New role:",
+            message: "\n---------> Update Role <---------\n New role id:",
             name: "newRoleId",
-            default: "12",
+            default: "420",
             validate: validate
         },
-
-
-        // depending on user choice start creating worker
+        // depending on user choice update assigned employee role
     ]).then(({ id, newRoleId }) => {
-        console.log('Updating role...\n');
+        console.log("\x1b[33m%s\x1b[0m", "---------> Changing role...\n");
         const query = connection.query(
             `UPDATE employee SET ? WHERE ?`,
             [
@@ -249,28 +251,69 @@ function update() {
                 {
                     id: `${id}`,
                 }
-
             ],
             (err, res) => {
                 if (err) throw err;
                 console.log(id, newRole)
             }
         );
-
         // logs the actual query being run
-        console.log(query.sql);
+        console.log("\x1b[32m", "Success");
+        menu();
+    })
+};
+// Allows user to update a specific employees manager id
+function updateManger() {
+    inquirer.prompt([
+        {
+            type: "input",
+            message: "\n---------> Update Employee Manager <---------\n Employee id:",
+            name: "id",
+            default: "1",
+            validate: validate
+        },
+        {
+            type: "input",
+            message: "\n---------> Update Employee Manager <---------\n New manager id:",
+            name: "newManId",
+            default: "420",
+            validate: validate
+        },
+        // depending on user choice update assigned manger id
+    ]).then(({ id, newManId }) => {
+        console.log("\x1b[33m%s\x1b[0m", "---------> Changing Manager id...\n");
+        const query = connection.query(
+            `UPDATE employee SET ? WHERE ?`,
+            [
+                {
+                    role_id: `${newManId}`,
+                },
+                {
+                    manager_id: `${id}`,
+                }
+            ],
+            (err, res) => {
+                if (err) throw err;
+                console.log(id, newRole)
+            }
+        );
+        // logs the actual query being run
+        console.log("\x1b[32m", "Success");
         menu();
     })
 };
 
-
 //Informs user that the input is blank. Will not let them continue until the input is filled
 const validate = (value) => { if (value) { return true } else { return "Input field is empty please try again" } }
-
 
 // Keep at bottom so that everything in the middle can be read before we connect :)
 connection.connect((err) => {
     if (err) throw err;
+    // Ascii Generator
+    let input_text = "Made by J";
+    let ascii_text = ascii_text_generator(input_text, "2");
+    console.log(ascii_text);
+    console.log("\x1b[33m%s\x1b[0m", "\nCheckout my work here ------> https://github.com/Jdogcrane\n")
     console.log("\x1b[32m", `--------->Successfully connected as id ${connection.threadId}<---------\n`);
     menu();
 });
