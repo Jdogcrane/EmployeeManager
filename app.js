@@ -310,7 +310,7 @@ const validate = (value) => { if (value) { return true } else { return "Input fi
 connection.connect((err) => {
     if (err) throw err;
     // Ascii Generator
-    let input_text = "Made by J";
+    let input_text = "Employee Manager";
     let ascii_text = ascii_text_generator(input_text, "2");
     console.log(ascii_text);
     console.log("\x1b[33m%s\x1b[0m", "\nCheckout my work here ------> https://github.com/Jdogcrane\n")
