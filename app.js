@@ -227,14 +227,14 @@ function update() {
     inquirer.prompt([
         {
             type: "input",
-            message: "\n---------> Update Role <---------\n Employee id:",
+            message: "\n---------> Update Role <---------\n Select employee by id:",
             name: "id",
             default: "1",
             validate: validate
         },
         {
             type: "input",
-            message: "\n---------> Update Role <---------\n New role id:",
+            message: "\n---------> Update Role <---------\n Choose a new role by id:",
             name: "newRoleId",
             default: "420",
             validate: validate
@@ -242,8 +242,7 @@ function update() {
         // depending on user choice update assigned employee role
     ]).then(({ id, newRoleId }) => {
         console.log("\x1b[33m%s\x1b[0m", "---------> Changing role...\n");
-        const query = connection.query(
-            `UPDATE employee SET ? WHERE ?`,
+        connection.query(`UPDATE employee SET ? WHERE ?`,
             [
                 {
                     role_id: `${newRoleId}`,
@@ -254,10 +253,8 @@ function update() {
             ],
             (err, res) => {
                 if (err) throw err;
-                console.log(id, newRole)
             }
         );
-        // logs the actual query being run
         console.log("\x1b[32m", "Success");
         menu();
     })
@@ -267,37 +264,35 @@ function updateManger() {
     inquirer.prompt([
         {
             type: "input",
-            message: "\n---------> Update Employee Manager <---------\n Employee id:",
+            message: "\n---------> Update Employee Manager <---------\n Select employee by id:",
             name: "id",
             default: "1",
             validate: validate
         },
         {
             type: "input",
-            message: "\n---------> Update Employee Manager <---------\n New manager id:",
+            message: "\n---------> Update Employee Manager <---------\n Pick a new manager by id:",
             name: "newManId",
             default: "420",
             validate: validate
         },
         // depending on user choice update assigned manger id
     ]).then(({ id, newManId }) => {
-        console.log("\x1b[33m%s\x1b[0m", "---------> Changing Manager id...\n");
+        console.log("\x1b[33m%s\x1b[0m", "---------> Changing employees manager by id...\n");
         const query = connection.query(
             `UPDATE employee SET ? WHERE ?`,
             [
                 {
-                    role_id: `${newManId}`,
+                    manager_id: `${newManId}`,
                 },
                 {
-                    manager_id: `${id}`,
+                    id: `${id}`,
                 }
             ],
             (err, res) => {
                 if (err) throw err;
-                console.log(id, newRole)
             }
         );
-        // logs the actual query being run
         console.log("\x1b[32m", "Success");
         menu();
     })
