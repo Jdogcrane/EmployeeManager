@@ -37,7 +37,7 @@ For this project my goal was to create a Employee-Management Tool that will allo
 * Added function the updates assigned manager based off user input
 * Added validator for prompts
 
->Notes: Had some confusion on what was needed to do for this assignment. Gif showed more than what was in the HW readme. I followed readme the best I could, although it would of been nice to see the normal layout for the assignment for better clarity.
+>Notes: Had some confusion on what was needed to do for this assignment. Gif showed more than what was written in the HW readme. I followed readme the best I could, although it would of been nice to see the normal layout for the assignment for better clarity.
 
 ## Preview
 ![alt link= this is the place for the site preview](./assets/preview.gif)
